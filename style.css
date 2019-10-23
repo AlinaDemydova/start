@@ -1,3 +1,66 @@
-body {
-    background-color: violet;
+.chatContainer, .usersContainer {
+	height: 100%;
+	border: 2px solid lightgrey;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 10px;
+	
+}
+.chatContainer {
+	width: 60%;
+	overflow: auto;
+}
+.users {
+	height: 90%;
+	overflow: auto;
+}
+.usersContainer {
+	width: 40%;
+}
+.header {
+	background-color: gainsboro;
+	padding: 10px;
+	border-radius: 5px;
+	font-weight: 600;
+}
+.container {
+	height: 500px;
+	display: flex;
+}
+.block {
+	border: 1px dashed lightgrey;
+	padding: 5px;
+	margin: 3px;
+	display: flex;
+}
+.buttonAddUser {
+	width: 150px;
+	height: 30px;
+	display: block;
+	border: 2px solid lightgrey;
+	border-radius: 5px;
+	margin: auto;
+	margin-top: 12px;
+	background-image: linear-gradient(gainsboro, LightSlateGray);
+	font-weight: 600;
+}
+.img {
+	min-width: 120px;
+	height: 120px;
+	border-radius: 100%;
+}
+.img+div {
+	padding: 5px;
+	padding-left: 20px;
+}
+.name {
+	font-size: 20px;
+	font-weight: 600;
+	margin-top: 0;
+	display: inline;
+}
+.age {
+	font-size: 24px;
+	font-weight: 600;
+	margin-left: 10px;
 }
