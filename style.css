@@ -1,0 +1,84 @@
+.container {
+	margin: 0;
+	height: 400px;
+}
+.table {
+	width: 450px;	
+	height: 450px;	
+	border: 3px dashed grey; 
+	display: flex; 
+	flex-wrap: wrap; 
+	margin-left: 10px;
+}
+.td, .filled {
+	width: 140px;	
+	height: 140px;	
+	border: 3px solid olive; 
+	margin: 2px;
+}
+.xoBox {
+	width: 280px;
+	height: 140px;
+	border: 3px dashed gray;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute; 
+	top: 0px; 
+	left: 100px;
+}
+.xo {
+	color: red;
+	width: 140px;
+	height: 140px;
+	line-height: 140px;
+	font-size: 100px;
+	font-weight: 900;
+	font-family: Bradley Hand, cursive;
+	margin: auto;
+	text-align: center;
+}
+.h1 {
+	text-align: center;
+	margin: 0;
+	margin-bottom: 10px;
+	width: 470px;
+	margin-left: 10px;
+}
+.hr {
+	height: 10px;
+	width: 410px;
+	background-color: red;
+	position: absolute;
+	display: none; 
+}
+.nclone {
+	position: relative;
+	opacity: 1.0;
+	top: 0px;
+	left: 0px;
+}
+.dblock {
+	display: block;
+}
+
+.hr1 {top: 286px; left: 27px;}
+.hr2 {top: 438px; left: 27px;}
+.hr3 {top: 580px; left: 27px;}
+.hr4 {top: 436px; left: -127px; transform: rotate(-90deg);}
+.hr5 {top: 436px; left: 39px; transform: rotate(-90deg);}
+.hr6 {top: 436px; left: 180px; transform: rotate(-90deg);}
+.hr7 {top: 436px; left: 27px; transform: rotate(45deg);}
+.hr8 {top: 436px; left: 27px; transform: rotate(-45deg);}
+
+.button {
+	width: 150px;
+	height: 30px;	
+	display: block;
+	border: 2px solid gray;
+	border-radius: 7px;
+	margin-top: 4px;
+	margin-left: 164px;
+	background-image: linear-gradient(LightSeaGreen, LightSkyBlue);
+	font-weight: 600;
+}
