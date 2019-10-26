@@ -6,11 +6,12 @@ class gameXO {
 		this.positionX = 160;
 		this.positionY = 70;
 		this.numberCells = 9;
+		this.playerX = 'X';
+		this.playerO = 'O';
 		this.counter_active = '';
 		this.inHTML = '';
 		this.clone = '';
 		this.nclone = '';
-		this.tdArray = document.querySelectorAll('.td');
 		this.xoBox = document.createElement('div');
 		this.xxx = document.createElement('div');
 		this.ooo = document.createElement('div');
@@ -19,7 +20,7 @@ class gameXO {
 		this.button = document.createElement('button');
 	}
 
-	createField() {
+	createField = () => {
 		for(let i = 1; i <= 8; i++) {
 			let hr = document.createElement('hr');
 			this.fill(hr, this.container, 'hr hr' + i);
@@ -29,8 +30,8 @@ class gameXO {
 			this.container.appendChild(br);
 		}
 		this.fill(this.xoBox, this.container, 'xoBox', '');
-		this.fill(this.xxx, this.xoBox, 'xo', 'xxx', 'X');
-		this.fill(this.ooo, this.xoBox, 'xo', 'ooo', 'O');
+		this.fill(this.xxx, this.xoBox, 'xo', 'xxx', this.playerX);
+		this.fill(this.ooo, this.xoBox, 'xo', 'ooo', this.playerO);
 		this.fill(this.h1, this.container, 'h1', '', 'Let`s go!');
 		this.fill(this.table, this.container, 'table', '');
 		this.fill(this.button, this.container, 'button', 'newGame', 'New game');
@@ -40,96 +41,100 @@ class gameXO {
 		}
 		this.go();
 	};
-	fill(name, parent, clName, id, inner) {
+
+	fill = (name, parent, clName, id, inner) => {
 		parent.appendChild(name);
 		name.className = clName;
 		if (id) name.id = id;
 		if (inner) name.innerHTML = inner;
 	};
-	go() {
+
+	go = () => {
+		let tdArray = document.querySelectorAll('.td');
 		window.addEventListener('mousemove', this.mMove);
-		window.addEventListener('mouseup', this.mUp);
-		this.loadNewGame();
+		window.addEventListener('mouseup', this.mUp);			
 		xxx.addEventListener('mousedown', this.mDown);
 		ooo.addEventListener('mousedown', this.mDown);
-	
-		this.tdArray.forEach(function(elem) {
-			elem.addEventListener('mouseover', this.mOver);
-		});		
+		this.mOver(event, tdArray);
+		this.loadNewGame();
 	};
-	mDown(event) {
+
+	mDown = (event) => {
 			this.counter_active = true;
 			this.inHTML = event.target.innerHTML;
 			this.clone = event.target.cloneNode(true);
 			this.clone.id = 'clone';
 			event.target.removeEventListener('mousedown', this.mDown);
-			console.log(this.clone);	
 	};
-	mMove(event) {
-		console.log(this.clone);
+
+	mMove = (event) => {
 		if (this.counter_active === true) {
-			let y = event.clientY - positionY;
-			let x = event.clientX - positionX;
+			let y = event.clientY - this.positionY;
+			let x = event.clientX - this.positionX;
 			this.clone.style.cssText = 'opacity: 0.5; position: absolute; top: ' + y + 'px; left: ' + x + 'px';
 			this.xoBox.appendChild(this.clone);
-		}
+		}	
 	};
-	mUp(event) {
+
+	mUp = (event) => {
 		this.counter_active = false;
-		console.log(this.clone);
 		this.nclone = this.clone.cloneNode(true);
 		this.clone.remove();
 	};
-	/*mOver(event) {
-		if (this.inHTML === 'X' || this.inHTML === 'O') {
-			if (event.target.className === 'td' && event.target.className !== 'filled') {
-				this.nclone.style.cssText = 'opacity: 1.0; position: relative; top: 0px; left: 0px';
-				elem.appendChild(this.nclone);
-				elem.className = 'filled';
-				this.checkTurn();
-				this.inHTML = '';
-			}
-		}
-		this.checkWinner();
-	}*/
-/*	checkTurn() {
-		if (this.checkWinner()) {
+
+	mOver = (event, tdArray) => {
+		tdArray.forEach((elem) => {
+			elem.addEventListener('mouseover', (event) => {
+				if (this.inHTML === this.playerX || this.inHTML === this.playerO) {
+					if (event.target.className === 'td' && event.target.className !== 'filled') {
+						this.nclone.style.cssText = 'opacity: 1.0; position: relative; top: 0px; left: 0px';						
+						elem.appendChild(this.nclone);
+						elem.className = 'filled';
+						this.checkTurn(tdArray);
+						this.inHTML = '';
+					}
+				}
+				this.checkWinner(tdArray);
+			});
+		});
+	}
+
+	checkTurn = (tdArray) => {
+		if (this.checkWinner(tdArray)) {
 			return;
 		}
-		if (this.inHTML === 'X') {
-			h1.innerHTML = 'O, your turn';
+		if (this.inHTML === this.playerX) {
+			this.h1.innerHTML = this.playerO + ', your turn';
 			ooo.addEventListener('mousedown', this.mDown);
 		} else {
-			h1.innerHTML = 'X, your turn';
+			this.h1.innerHTML = this.playerX + ', your turn';
 			xxx.addEventListener('mousedown', this.mDown);
 		}
-	};*/
+	};
 	
-/*	checkWinner() {
-		for (let i = 0; i < winCombinations.length; i++) {
-			let variant = winCombinations[i];
-			if (td[variant[0]].firstElementChild 
-				&& td[variant[1]].firstElementChild 
-				&& td[variant[2]].firstElementChild) {
-				let result = td[variant[0]].firstElementChild.innerHTML === td[variant[1]].firstElementChild.innerHTML 
-					&& td[variant[1]].firstElementChild.innerHTML === td[variant[2]].firstElementChild.innerHTML;
+	checkWinner = (tdArray) => {
+		for (let i = 0; i < this.winCombinations.length; i++) {
+			let variant = this.winCombinations[i];
+			if (tdArray[variant[0]].firstElementChild && tdArray[variant[1]].firstElementChild && tdArray[variant[2]].firstElementChild) {
+				let result = tdArray[variant[0]].firstElementChild.innerHTML === tdArray[variant[1]].firstElementChild.innerHTML 
+					&& tdArray[variant[1]].firstElementChild.innerHTML === tdArray[variant[2]].firstElementChild.innerHTML;
 				if (result) {
-					h1.innerHTML = td[variant[0]].firstElementChild.innerHTML + ' is winner!';
+					this.h1.innerHTML = tdArray[variant[0]].firstElementChild.innerHTML + ' is winner!';
 					document.querySelector('.hr' + [i + 1]).className += ' dblock';
 					return true;
 				}
-				if (!result && document.querySelectorAll('.filled').length === numberCells) {
-					h1.innerHTML = 'Draw!';
+				if (!result && document.querySelectorAll('.filled').length === this.numberCells) {
+					this.h1.innerHTML = 'Draw!';
 				}
 			}
 		}
-	};*/
+	};
+
 	loadNewGame() {
 		document.getElementById('newGame').addEventListener('click', function() {
 			document.location.reload();
 		});
 	};
-
 }
 
 let newgameXO = new gameXO();
